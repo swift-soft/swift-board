@@ -19,6 +19,7 @@ import isEmail from 'validator/es/lib/isEmail'
 import {supabase} from '@/api'
 import useLoadingState from '@/common/hooks/use-loading-state'
 
+import DemoAccountsModal from './demo-accounts-modal'
 import SocialSignIn from './social-signin'
 import {isInputValid, isPasswordValid} from './utils'
 
@@ -161,6 +162,10 @@ const AuthForm = () => {
         </Text>
         <Divider flex={1} />
       </Flex>
+      <DemoAccountsModal
+        setEmail={(email) => setInput((p) => ({...p, email}))}
+        setPassword={(password) => setInput((p) => ({...p, password}))}
+      />
       <Button
         colorScheme="gray"
         _hover={{
