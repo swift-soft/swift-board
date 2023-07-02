@@ -10,7 +10,7 @@ create table "tasks" (
   "description" text not null,
   "documents" text[] not null default '{}'::text[],
   "max_points" int not null default 0, -- number of points granted depends on the time to deadline
-  "min_points" int not null default 0,
+  "min_points" int not null default 0
   -- "number_of_questions" int not null default 0,
   -- "questions" text[] not null default '{}'::text[]
 );
@@ -83,5 +83,31 @@ begin
   );
 end
 $$;
+
+create view company_employees as
+select
+  u."id",
+  u."email",
+  u."full_name",
+  generate_user_avatar_url(u."id") as "avatar_url",
+  cu."company",
+  cu."role",
+  cp."id" as "position_id", 
+  cp."name" as "position_name", 
+  cu."responsibilities", 
+  cu."requirements",
+  cu."points",
+  ut."task_statuses"
+from "company_users" cu
+left join "users" u on u."id" = cu."user"
+left join "companies" c on c."id" = cu."company"
+left join "company_positions" cp on cp."id" = cu."position" 
+left join lateral(
+  select array_agg(ut."status") as "task_statuses"
+  from "user_tasks" ut
+  inner join "tasks" t on t."id" = ut."task"
+  where ut."user" = cu."user"
+  and t."company" = cu."company"
+) ut on true;
 
 -- migrate:down
