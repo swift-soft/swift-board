@@ -12,6 +12,10 @@ SwiftBoard is an onboarding platform that utilizes AI to make the onboarding pro
 
 The project started as a challenge in the _Hack na Zdrowie 2_ hackathon organized by the Medical University of Łódź, Poland
 
+## Demo
+
+https://www.youtube.com/watch?v=aCl5UnoWGIk
+
 ## Prerequisites
 
 The development environment can be run on any UNIX OS,
@@ -61,4 +65,3 @@ After logging in / creating your account on the website, run the following SQL q
 ```sql
 update "users" set "role" = 'admin' where 'email' = 'youremail'
 ```
-#ssss
